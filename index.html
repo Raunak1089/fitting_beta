@@ -352,18 +352,6 @@ let v = delta.toString();
         
         console.log("RSS : ", sum(RSS))
 
-    }
-
-    else {
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < X.length; i++) {
-        	 draw_point(X[i], Y[i], 3);
-        }
-draw_axes();
-
-        document.getElementById("results").innerHTML = 
-        "Curve doesn't exist";
-    }
 
 
 // CURVE
@@ -380,6 +368,18 @@ ctx.beginPath();
     }
 
 ctx.stroke();
+    }
+
+    else {
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < X.length; i++) {
+        	 draw_point(X[i], Y[i], 3);
+        }
+draw_axes();
+
+        document.getElementById("results").innerHTML = 
+        "Curve doesn't exist";
+    }
 
 done = true;
 
