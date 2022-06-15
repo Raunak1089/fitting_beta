@@ -8,8 +8,17 @@
 <body>
 
 <input id="inp_point" placeholder= "Input a point : eg. 2,5" onkeydown="if (event.keyCode == 13) {go()}"></input>
-<button onclick="go()" style="font-size: 2em;">Go</button>
-
+<br>
+<table id="tab">
+<tr>
+    <td>
+    <textarea id="inp_exc" placeholder="Paste data from Excel"></textarea>
+    </td>
+    <td>
+    <button onclick="excel()" style="height: 80px; font-size: 2em; border-radius: 50%">Go</button>
+    </td>
+ </tr>
+ </table>
 <div style="font-size: 2em; background: none;">
 <button style="font-size: 1.3em;" onclick= "dec()">-</button>
 <span id="deg">2</span>
@@ -63,8 +72,16 @@ button{
   margin: 5px;
 }
 
-#inp_point{
+#inp_point, #inp_exc{
   font-size: 2em;
+  border-radius: 20px;
+  padding: 0px 20px 0px;
+}
+
+#tab{
+  margin: 0px 50%;
+  transform: translate(-50%, 0%);
+  font-size: 1em;
   border-radius: 20px;
   padding: 0px 20px 0px;
 }
@@ -176,6 +193,25 @@ degree = Number(document.getElementById('deg').innerHTML);
 	}}
 
 
+function excel() {	
+
+let str = document.querySelector('#inp_exc').value;
+ 	
+  pairs = str.split('\n'); 
+
+  for (i=0; i<pairs.length-1; i++) {
+     s = pairs[i].split('	');
+     X.push(Number(s[0]));
+     Y.push(Number(s[1]));
+	}
+	
+	for (let i = 0; i < X.length; i++) {
+	 draw_point(X[i], Y[i]);
+}
+
+
+document.querySelector('#inp_exc').value = '';
+}
 
 
 
