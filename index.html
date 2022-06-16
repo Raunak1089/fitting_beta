@@ -198,8 +198,8 @@ function excel() {
 let str = document.querySelector('#inp_exc').value;
  	
   pairs = str.split('\n'); 
-
-  for (i=0; i<pairs.length-1; i++) {
+  h = str.split('	');
+  for (i=0; i<h.length-1; i++) {
      s = pairs[i].split('	');
      X.push(Number(s[0]));
      Y.push(Number(s[1]));
