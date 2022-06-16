@@ -7,8 +7,6 @@
 <script src="https://raunak1089.github.io/all_scripts/stat_script.js"></script>
 <body>
 
-<input id="inp_point" placeholder= "Input a point : eg. 2,5" onkeydown="if (event.keyCode == 13) {go()}"></input>
-<br>
 <table id="tab">
 <tr>
     <td>
@@ -19,6 +17,9 @@
     </td>
  </tr>
  </table>
+<br>
+<input id="inp_point" placeholder= "Input a point : eg. 2,5" onkeydown="if (event.keyCode == 13) {go()}"></input>
+
 <div style="font-size: 2em; background: none;">
 <button style="font-size: 1.3em;" onclick= "dec()">-</button>
 <span id="deg">2</span>
@@ -550,13 +551,17 @@ enableScroll();
 let scalar = document.getElementById("scale");
 let scale_now = document.getElementById("scale_now");
 
-scalar.ontouchmove = function(ev) {
+function scale_it(ev) {
   		scale = this.value;
   		scale_now.innerHTML = this.value;
            ctx.clearRect(0, 0, canvas.width, canvas.height);
            draw();
            draw_axes();
 }
+
+
+scalar.addEventListener("touchmove", scale_it);
+scalar.addEventListener("mousemove", scale_it);
 
 
 // DRAWING THE CURVE AND POINTS
