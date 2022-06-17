@@ -7,7 +7,7 @@
 <script src="https://raunak1089.github.io/all_scripts/stat_script.js"></script>
 <body>
 
-<table id="tab">
+<table id="exc_tab">
 <tr>
     <td>
     <textarea id="inp_exc" placeholder="Paste data from Excel"></textarea>
@@ -40,10 +40,14 @@ Your browser does not support the canvas element.
 <button onclick="home()" style="font-size: 3em; color: grey;">
 <i class="fa fa-home"></i>
 </button>
+<button onclick="inv_exc()" style="font-size: 3em; color: grey;">
+<i class="fa fa-clone"></i>
+</button>
 <p>
 <input id="scale" type="range" min="0" max="50" step= "0.1" value="5"></input>
 <span id="scale_now">5</span>
 </div>
+<br><br>
 <br><br>
 <div id="results" style="font-size: 2.5em; color: white; word-wrap: break-word;"></div>
 
@@ -79,7 +83,7 @@ button{
   padding: 0px 20px 0px;
 }
 
-#tab{
+#exc_tab{
   margin: 0px 50%;
   transform: translate(-50%, 0%);
   font-size: 1em;
@@ -97,6 +101,17 @@ input[type= "range"]{
   font-size: 2em;
   color: white;
 }
+
+#tab{
+  border-collapse: collapse;
+  user-select: auto;
+} 
+
+table#tab td{
+border: 0px solid;
+font-size: 11pt;
+}
+
 </style>
 
 <script>
@@ -210,9 +225,71 @@ let str = document.querySelector('#inp_exc').value;
 	 draw_point(X[i], Y[i]);
 }
 
-
 document.querySelector('#inp_exc').value = '';
+
 }
+
+
+function copyElementContents(el) {
+	var body = document.body, range, sel;
+	if (document.createRange && window.getSelection) {
+		range = document.createRange();
+		sel = window.getSelection();
+		sel.removeAllRanges();
+		try {
+			range.selectNodeContents(el);
+			sel.addRange(range);
+		} catch (e) {
+			range.selectNode(el);
+			sel.addRange(range);
+		}
+	} else if (body.createTextRange) {
+		range = body.createTextRange();
+		range.moveToElementText(el);
+		range.select();
+	}
+	document.execCommand('copy');
+
+
+function clearSelection() {
+    if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+    } else if (document.selection) {
+        document.selection.empty();
+    }
+}
+	clearSelection();
+
+
+}
+
+
+
+function inv_exc() {	
+
+let tab = document.createElement('table');
+document.body.appendChild(tab); tab.id = 'tab';
+
+  
+for (i=0; i < X.length; i++) {
+  var row = tab.insertRow(i);
+    for (j=0; j < 2; j++) {
+      row.insertCell(j);
+    }
+}
+
+for (i=0; i<X.length; i++){
+  tab.rows[i].cells[0].innerHTML = X[i];
+  tab.rows[i].cells[1].innerHTML = Y[i];
+}
+
+copyElementContents(tab);
+
+document.body.removeChild(tab);
+
+}
+
+
 
 
 
