@@ -1,12 +1,17 @@
  <!DOCTYPE html>
 <html>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.55, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.5, user-scalable=0">
+
 <link rel="icon" sizes="192x192" href="https://raunak1089.github.io/Required-files/favicon.ico">
 
   <script src="https://kit.fontawesome.com/ea77d645dc.js" crossorigin="anonymous"></script>
 <script src="https://raunak1089.github.io/all_scripts/disablescroll.js"></script>
 <script src="https://raunak1089.github.io/all_scripts/touch_functions.js"></script>
 <script src="https://raunak1089.github.io/all_scripts/stat_script.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 <body>
 
 <table id="exc_tab">
@@ -46,7 +51,7 @@ Your browser does not support the canvas element.
 <i class="fa fa-clone"></i>
 </button>
 <p>
-<input id="scale" type="range" min="0" max="50" step= "0.1" value="5"></input>
+<input id="scale" type="range" min="0" max="500" step= "0.1" value="5"></input>
 <span id="scale_now">5</span>
 </div>
 <br><br>
@@ -54,6 +59,7 @@ Your browser does not support the canvas element.
 <div id="results" style="font-size: 2.5em; color: white; word-wrap: break-word;"></div>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
 *{
@@ -64,6 +70,7 @@ body{
  background-image: radial-gradient(ellipse at top, #8db8e1 0.0%, #4a8bcc 11.1%, #1d528a 22.2%, #1a3b5e 33.3%, #103d6a 44.4%, #2e1f63 55.6%, #171e26 66.7%, #293643 77.8%, #28323d 88.9%, #262e36 100.0%);
  text-align: center;
  user-select: none;
+ 
 }
 
 #deg{
@@ -134,11 +141,13 @@ let final, degree;
 
 
   function inc(){
+  play_audio('dido.wav');
    document.getElementById('deg').innerHTML -= -1;
    degree = Number(document.getElementById('deg').innerHTML);
    }
   
   function dec(){
+  play_audio('dido.wav');
    document.getElementById('deg').innerHTML -= 1;
    degree = Number(document.getElementById('deg').innerHTML);
    }
@@ -173,7 +182,18 @@ degree = Number(document.getElementById('deg').innerHTML);
   n = X.length;
   }}
   
+  function play_audio(link){
+  var put = document.createElement('audio');
+  put.id = 'firesound';
+  put.src = 'https://raunak1089.github.io/Required-files/' + link; 
+  document.body.appendChild(put);
+  put.play();
+  setTimeout(function(){document.getElementById("firesound").remove(); }, 1000);
+  }
+  
   function plot(event) {
+  play_audio('dip.wav');
+
             let rect = canvas.getBoundingClientRect();
             let selectedx = event.clientX - rect.left;
             let selectedy = event.clientY - rect.top;
@@ -287,6 +307,13 @@ for (i=0; i<X.length; i++){
 
 copyElementContents(tab);
 
+let yoyo = document.querySelector('table#tab td');
+
+yoyo.style.cssText = `
+  border: 20px solid;
+  font-size: 30pt;
+  `;
+
 document.body.removeChild(tab);
 
 }
@@ -302,6 +329,7 @@ document.body.removeChild(tab);
 
 function graduate() {
 
+if (done == false) {play_audio('done.mp3');}
 //ok.removeEventListener("click", graduate);
 canvas.removeEventListener("click", plot);
 
@@ -493,6 +521,7 @@ ctx.stroke();
         }
 draw_axes();
 
+        play_audio('error.mp3');
         document.getElementById("results").innerHTML = 
         "Curve doesn't exist";
     }
@@ -555,6 +584,14 @@ for (let i = 0; i < yax.data.length; i += 4) {
 
            ctx.putImageData(xax, originx-1, 0);
            ctx.putImageData(yax, 0, originy-1);
+
+
+/*
+for (let i = -100; i < 100; i+=scale*2) {
+		draw_lines_x(i)
+}
+*/
+
 }
 
 // MAKE DRAGGING FUNCTION FOR PC
@@ -661,6 +698,20 @@ function draw_point(x, y, prec=3) {
 
 }
 
+/*
+function draw_lines_x(x) {
+	 ctx.lineWidth = 2;
+	 ctx.strokeStyle = 'red'; 
+   ctx.beginPath();
+   ctx.arc(scale*x+originx, 0, 1, 0, 2 * Math.PI);
+   ctx.stroke();
+
+   ctx.font = "20px Arial";
+   var pt = x;
+   ctx.fillText(pt,scale*x+originx,30);
+
+}
+*/
 
 function draw(){
 
@@ -695,10 +746,10 @@ for (let i = 0; i < X.length; i++) {
 }
 
 
+
+
+
 }
-
-
-
 
 
 
