@@ -14,16 +14,6 @@
   </script>
 <body>
 
-<table id="exc_tab">
-<tr>
-    <td>
-    <textarea id="inp_exc" placeholder="Paste data from Excel"></textarea>
-    </td>
-    <td>
-    <button onclick="excel()" style="height: 80px; font-size: 2em; border-radius: 50%">Go</button>
-    </td>
- </tr>
- </table>
 <br>
 <input id="inp_point" placeholder= "Input a point : eg. 2,5" onkeydown="if (event.keyCode == 13) {go()}"></input>
 
@@ -50,13 +40,16 @@ Your browser does not support the canvas element.
 <button onclick="inv_exc()" style="font-size: 3em; color: grey;">
 <i class="fa fa-clone"></i>
 </button>
+<button onclick="excel()" style="font-size: 3em; color: grey;">
+<i class="fa fa-clipboard"></i>
+</button>
 <p>
 <input id="scale" type="range" min="0" max="500" step= "0.1" value="5"></input>
 <span id="scale_now">5</span>
 </div>
 <br><br>
 <br><br>
-<div id="results" style="font-size: 2.5em; color: white; word-wrap: break-word;"></div>
+<div id="results" style="font-size: 2.5em; color: white; word-wrap: break-word;"></div>
 
 <style>
 
@@ -124,6 +117,7 @@ font-size: 11pt;
 </style>
 
 <script>
+
 let music1 = new Audio('https://raunak1089.github.io/Required-files/dip.wav');
 let music2 = new Audio('https://raunak1089.github.io/Required-files/dido.wav');
 let music3 = new Audio('https://raunak1089.github.io/Required-files/done.wav');
@@ -194,7 +188,7 @@ degree = Number(document.getElementById('deg').innerHTML);
   put.src = 'https://raunak1089.github.io/Required-files/' + link; 
   document.body.appendChild(put);
   put.play();
-  setTimeout(function(){document.getElementById("firesound").remove(); }, 5000);
+  setTimeout(function(){document.getElementById("firesound").remove(); }, 1000);
   }
   
   function plot(event) {
@@ -239,7 +233,7 @@ degree = Number(document.getElementById('deg').innerHTML);
 
 function excel() {	
 
-let str = document.querySelector('#inp_exc').value;
+  navigator.clipboard.readText().then((str)=>{
  	
   pairs = str.split('\n'); 
   h = str.split('	');
@@ -252,8 +246,7 @@ let str = document.querySelector('#inp_exc').value;
 	for (let i = 0; i < X.length; i++) {
 	 draw_point(X[i], Y[i]);
 }
-
-document.querySelector('#inp_exc').value = '';
+    });
 
 }
 
@@ -481,7 +474,7 @@ let v = delta.toString();
         errors = [];
         
         			for (let i = 0; i < n; i++) {
-        			 	errors.push(Math.abs(pred_Y[i]-Y[i]));
+        			 	errors.push(Y[i]-pred_Y[i]);
         			}
         
 
