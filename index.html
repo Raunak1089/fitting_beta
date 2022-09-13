@@ -38,10 +38,10 @@ Your browser does not support the canvas element.
 <button onclick="home()" style="font-size: 3em; color: grey;">
 <i class="fa fa-home"></i>
 </button>
-<button onclick="inv_exc()" style="font-size: 3em; color: grey;">
+<button onclick="inv_exc(); copyit(this)" style="font-size: 3em; color: grey;">
 <i class="fa fa-clone"></i>
 </button>
-<button onclick="excel()" style="font-size: 3em; color: grey;">
+<button onclick="excel(); copyit(this)" style="font-size: 3em; color: grey;">
 <i class="fa fa-clipboard"></i>
 </button>
 <br>
@@ -55,6 +55,8 @@ Your browser does not support the canvas element.
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Abril Fatface:400,500,600,700&display=swap');
 
 *{
  font-family: 'Comic Neue';
@@ -109,6 +111,35 @@ table#tab td{
 border: 0px solid;
 font-size: 11pt;
 }
+
+
+#copied{
+width: fit-content;
+height: fit-content;
+transform: translate(-50%, -50%);
+position: absolute;
+pointer-events: none;
+font-size: 50px;
+font-weight: 700;
+//background: #ccc;
+color: grey;
+text-align: center;
+font-family: Comfortaa;
+padding: 10px;
+animation: anm7 0.5s forwards;
+}
+
+@keyframes anm7 {
+  0%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 0;
+    font-size: 200px;
+  }
+}
+
+
 
 </style>
 
@@ -338,6 +369,30 @@ yoyo.style.cssText = `
 document.body.removeChild(tab);
 
 }
+
+
+function copyit(x){
+
+  // REDUCE BRIGHTNESS
+
+x.style.filter = "brightness(50%)";
+
+  // WRITE COPIED
+
+let ripple = document.createElement('span');
+ripple.innerHTML=x.innerHTML;
+ripple.id= "copied";
+           x.appendChild(ripple);
+
+
+  // REMOVE THINGS
+
+setTimeout(function(){
+          x.style.filter = "brightness(100%)";
+          x.removeChild(ripple);
+          }, 500)
+}
+
 
 
 function clr(){
