@@ -1,3 +1,4 @@
+
  <!DOCTYPE html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.5, user-scalable=0">
@@ -132,6 +133,7 @@ let final, degree;
   let X = [];
   let Y = [];
   let n;
+  let redo_list_X = []; let redo_list_Y = [];
 
 
   function inc(){
@@ -198,6 +200,7 @@ degree = Number(document.getElementById('deg').innerHTML);
 	let new_y = Math.round((originy-selectedy)/scale);
   X.push(new_x);
   Y.push(new_y);
+  redo_list_X = []; redo_list_Y = [];
 
   draw_point(new_x, new_y);
 
@@ -206,7 +209,6 @@ degree = Number(document.getElementById('deg').innerHTML);
   n = X.length;
   }
 
-  let redo_list_X = []; let redo_list_Y = [];
 
 	function undo(){
 	if (done == false) {
