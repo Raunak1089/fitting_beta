@@ -43,9 +43,6 @@ Your browser does not support the canvas element.
 <button onclick="excel()" style="font-size: 3em; color: grey;">
 <i class="fa fa-clipboard"></i>
 </button>
-<p>
-<input id="scale" type="range" min="0" max="500" step= "0.1" value="5"></input>
-<span id="scale_now">5</span>
 </div>
 <br><br>
 <br><br>
@@ -97,11 +94,6 @@ input[type= "range"]{
   width: 60%;
   height: 100px;
   border-radius: 20px;
-}
-
-#scale_now{
-  font-size: 2em;
-  color: white;
 }
 
 #tab{
@@ -550,9 +542,6 @@ function home(){
   originx = canvas.width/5;
   originy = canvas.height*4/5;
   scale = 5;
-  document.getElementById("scale").value = 5;
-  document.getElementById("scale_now").innerHTML = 5;
-  
              ctx.clearRect(0, 0, canvas.width, canvas.height);
   draw();
   draw_axes();
@@ -664,23 +653,6 @@ try{
 document.ontouchend = function(){
 enableScroll();
 }
-
-//  SCALING WITH SLIDER ___________
-
-let scalar = document.getElementById("scale");
-let scale_now = document.getElementById("scale_now");
-
-function scale_it(ev) {
-  		scale = this.value;
-  		scale_now.innerHTML = this.value;
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           draw();
-           draw_axes();
-}
-
-
-scalar.addEventListener("touchmove", scale_it);
-scalar.addEventListener("mousemove", scale_it);
 
 
 // DRAWING THE CURVE AND POINTS
