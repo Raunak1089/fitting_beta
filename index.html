@@ -350,6 +350,9 @@ function clr(){
   draw_axes();
   final = '';
   document.getElementById("results").innerHTML = '';
+  ok.addEventListener("click", graduate); 
+  canvas.addEventListener("click", plot);
+  done = false;
 }
 
 
