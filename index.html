@@ -29,10 +29,11 @@ Your browser does not support the canvas element.
 </canvas>
 
 <div>
-<button id="ok" style="font-size: 3em;">OK</button>
-<button onclick="location.href=location.href" style="font-size: 3em;">Clear</button>
 <button onclick="undo()" style="font-size: 3em; color: grey;">
 <i class="fa fa-undo"></i>
+</button>
+<button onclick="redo()" style="font-size: 3em; color: grey;">
+<i class="fa fa-redo"></i>
 </button>
 <button onclick="home()" style="font-size: 3em; color: grey;">
 <i class="fa fa-home"></i>
@@ -43,6 +44,9 @@ Your browser does not support the canvas element.
 <button onclick="excel()" style="font-size: 3em; color: grey;">
 <i class="fa fa-clipboard"></i>
 </button>
+<br>
+<button id="ok" style="font-size: 3em;">OK</button>
+<button onclick="location.href=location.href" style="font-size: 3em;">Clear</button>
 </div>
 <br><br>
 <br><br>
@@ -202,14 +206,36 @@ degree = Number(document.getElementById('deg').innerHTML);
   n = X.length;
   }
 
+  let redo_list_X = []; let redo_list_Y = [];
 
 	function undo(){
 	if (done == false) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 			
-			
+      redo_list_X.push(X[X.length-1]); redo_list_Y.push(Y[Y.length-1]);
 			X.pop(); Y.pop();
 			
+			for (let i = 0; i < X.length; i++) {
+			 	draw_point(X[i], Y[i], 3);
+			}
+			
+                      ctx.putImageData(xax, originx-1, 0);
+                      ctx.putImageData(yax, 0, originy-1);
+
+  //console.log(X);
+  //console.log(Y);
+  n = X.length;
+	}}
+
+
+	function redo(){
+	if (done == false) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+			
+			
+			X.push(redo_list_X[redo_list_X.length-1]); Y.push(redo_list_Y[redo_list_Y.length-1]);
+			redo_list_X.pop(); redo_list_Y.pop();
+
 			for (let i = 0; i < X.length; i++) {
 			 	draw_point(X[i], Y[i], 3);
 			}
