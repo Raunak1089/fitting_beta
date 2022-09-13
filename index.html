@@ -1,4 +1,3 @@
-
  <!DOCTYPE html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.5, user-scalable=0">
@@ -47,7 +46,7 @@ Your browser does not support the canvas element.
 </button>
 <br>
 <button id="ok" style="font-size: 3em;">OK</button>
-<button onclick="location.href=location.href" style="font-size: 3em;">Clear</button>
+<button onclick="clr()" style="font-size: 3em;">Clear</button>
 </div>
 <br><br>
 <br><br>
@@ -341,7 +340,17 @@ document.body.removeChild(tab);
 }
 
 
-
+function clr(){
+  X = []; Y = [];
+  redo_list_X = []; redo_list_Y = [];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  originx = canvas.width/5;
+  originy = canvas.height*4/5;
+  scale = 5;
+  draw_axes();
+  final = '';
+  document.getElementById("results").innerHTML = '';
+}
 
 
 
