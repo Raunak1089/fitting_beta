@@ -212,9 +212,11 @@ degree = Number(document.getElementById('deg').innerHTML);
 	if (done == false) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 			
+    if(X.length>0){
       redo_list_X.push(X[X.length-1]); redo_list_Y.push(Y[Y.length-1]);
 			X.pop(); Y.pop();
-			
+    }
+
 			for (let i = 0; i < X.length; i++) {
 			 	draw_point(X[i], Y[i], 3);
 			}
@@ -232,9 +234,10 @@ degree = Number(document.getElementById('deg').innerHTML);
 	if (done == false) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 			
-			
+    if(redo_list_X.length>0){
 			X.push(redo_list_X[redo_list_X.length-1]); Y.push(redo_list_Y[redo_list_Y.length-1]);
 			redo_list_X.pop(); redo_list_Y.pop();
+    }
 
 			for (let i = 0; i < X.length; i++) {
 			 	draw_point(X[i], Y[i], 3);
