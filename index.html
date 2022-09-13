@@ -636,7 +636,7 @@ xv_phn = e.clientX - originx;
 yv_phn = e.clientY - originy;
 
 
-//     ini_dist = two_touch_distance(ev, 1, 20);
+  try{  ini_dist = two_touch_distance(ev, 1, 20);}catch(err){}
 
 
 disableScroll();
@@ -646,10 +646,10 @@ disableScroll();
 canvas.ontouchmove = function(ev) {
            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
-//      fin_dist = two_touch_distance(ev, 1, 20);
-//  		scale = scale*((fin_dist/ini_dist)**0.1);
-
+try{
+    fin_dist = two_touch_distance(ev, 1, 20);
+ 		scale = scale*((fin_dist/ini_dist)**0.1);
+}catch(err){}
 
            originx = ev.touches[0].clientX - xv_phn;
            originy = ev.touches[0].clientY - yv_phn;
