@@ -696,6 +696,19 @@ yv_pc = e.clientY-originy;
 
 }
 
+canvas.onwheel = function(e) {
+  e.preventDefault();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if(scale-(e.deltaY/10)>=0){
+    scale -= (e.deltaY/10);
+  }
+
+  draw();
+  draw_axes();
+}
+
+
 document.onmouseup = function(){
         dragValue = null;
       }
