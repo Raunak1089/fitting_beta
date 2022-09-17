@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.5, user-scalable=0">
-
+  <title>Fit your curve!</title>
 <link rel="icon" sizes="192x192" href="https://raunak1089.github.io/Required-files/favicon.ico">
 
   <script src="https://kit.fontawesome.com/ea77d645dc.js" crossorigin="anonymous"></script>
@@ -232,6 +232,7 @@ degree = Number(document.getElementById('deg').innerHTML);
   Y.push(new_y);
   redo_list_X = []; redo_list_Y = [];
 
+  document.title = n+" points plotted";
   draw_point(new_x, new_y);
 
   //console.log(X);
@@ -619,6 +620,8 @@ draw_axes();
 
     }
 
+
+document.title = degree+" degree curve fitted!";
 done = true;
 
 
