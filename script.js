@@ -62,6 +62,8 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
+  document.title = n + " point(s) plotted";
+
   }}
   
   function play_audio(link){
@@ -86,11 +88,14 @@ degree = Number(document.getElementById('deg').innerHTML);
   Y.push(new_y);
   redo_list_X = []; redo_list_Y = [];
 
+  
   draw_point(new_x, new_y);
 
   //console.log(X);
   //console.log(Y);
   n = X.length;
+  document.title = n + " point(s) plotted";
+
   }
 
 
@@ -113,6 +118,8 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
+  document.title = n + " point(s) plotted";
+
 	}}
 
 
@@ -135,6 +142,8 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
+  document.title = n + " point(s) plotted";
+
 	}}
 
 
@@ -473,6 +482,8 @@ draw_axes();
 
     }
 
+
+  document.title = degree + " degree curve fitted!";
 done = true;
 
 
