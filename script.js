@@ -157,6 +157,7 @@ function excel() {
      s = pairs[i].split('	');
      X.push(Number(s[0]));
      Y.push(Number(s[1]));
+     document.title = X.length + " point(s) plotted";
 	}
 	
 	for (let i = 0; i < X.length; i++) {
@@ -164,7 +165,7 @@ function excel() {
 }
     });
 
-  document.title = X.length + " point(s) plotted";
+
 
 }
 
@@ -449,7 +450,9 @@ let v = delta.toString();
           RSS.push(errors[x] ** 2)
         }
         
-        console.log("RSS : ", sum(RSS))
+        console.log("RSS : ", sum(RSS));
+
+    document.title = degree + " degree curve fitted!";
 
 
 
@@ -486,8 +489,7 @@ draw_axes();
     }
 
 
-  document.title = degree + " degree curve fitted!";
-done = true;
+  done = true;
 
 
 }
