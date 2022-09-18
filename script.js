@@ -164,6 +164,8 @@ function excel() {
 }
     });
 
+  document.title = X.length + " point(s) plotted";
+
 }
 
 
