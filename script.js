@@ -270,6 +270,7 @@ function clr(){
   document.getElementById("results").innerHTML = '';
   ok.addEventListener("click", graduate); 
   canvas.addEventListener("click", plot);
+  document.title = "Fit your curve!";
   done = false;
 }
 
