@@ -647,7 +647,7 @@ function draw_point(x, y, prec=3) {
    ctx.arc(scale*x+originx, originy-scale*y, 2, 0, 2 * Math.PI);
    ctx.stroke();
 
-   ctx.font = "20px Arial";
+   ctx.font = "20px Raleway";
    let j = 10**prec;
    var pt = `(${Math.round(x*j)/j}, ${Math.round(y*j)/j})`;
    ctx.fillText(pt,scale*x+originx+10,originy-scale*y+20);
