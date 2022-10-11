@@ -1,4 +1,3 @@
-
 let music1 = new Audio('https://raunak1089.github.io/Required-files/dip.wav');
 let music2 = new Audio('https://raunak1089.github.io/Required-files/dido.wav');
 let music3 = new Audio('https://raunak1089.github.io/Required-files/done.wav');
@@ -62,8 +61,6 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
-  document.title = n + " point(s) plotted";
-
   }}
   
   function play_audio(link){
@@ -75,7 +72,9 @@ degree = Number(document.getElementById('deg').innerHTML);
   setTimeout(function(){document.getElementById("firesound").remove(); }, 1000);
   }
   
+  let dragged;
   function plot(event) {
+    if (!dragged){
   play_audio('dip.wav');
 
             let rect = canvas.getBoundingClientRect();
@@ -88,14 +87,12 @@ degree = Number(document.getElementById('deg').innerHTML);
   Y.push(new_y);
   redo_list_X = []; redo_list_Y = [];
 
-  
   draw_point(new_x, new_y);
 
   //console.log(X);
   //console.log(Y);
   n = X.length;
-  document.title = n + " point(s) plotted";
-
+  }
   }
 
 
@@ -108,7 +105,7 @@ degree = Number(document.getElementById('deg').innerHTML);
 			X.pop(); Y.pop();
     }
 
-			for (let i = 0; i < X.length; i++) {
+			for (i in X) {
 			 	draw_point(X[i], Y[i], 3);
 			}
 			
@@ -118,8 +115,6 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
-  document.title = n + " point(s) plotted";
-
 	}}
 
 
@@ -132,7 +127,7 @@ degree = Number(document.getElementById('deg').innerHTML);
 			redo_list_X.pop(); redo_list_Y.pop();
     }
 
-			for (let i = 0; i < X.length; i++) {
+			for (i in X) {
 			 	draw_point(X[i], Y[i], 3);
 			}
 			
@@ -142,8 +137,6 @@ degree = Number(document.getElementById('deg').innerHTML);
   //console.log(X);
   //console.log(Y);
   n = X.length;
-  document.title = n + " point(s) plotted";
-
 	}}
 
 
@@ -151,21 +144,18 @@ function excel() {
 
   navigator.clipboard.readText().then((str)=>{
  	
-  pairs = str.split('\n'); 
-  h = str.split('	');
-  for (i=0; i<h.length-1; i++) {
-     s = pairs[i].split('	');
-     X.push(Number(s[0]));
-     Y.push(Number(s[1]));
-     document.title = X.length + " point(s) plotted";
-	}
-	
-	for (let i = 0; i < X.length; i++) {
-	 draw_point(X[i], Y[i]);
-}
-    });
+    pairs = str.split('\n');
+    for (i of pairs) {
+      s = i.split('\t');
+      X.push(Number(s[0]));
+      Y.push(Number(s[1]));
+    }
+    
+    for (i in X) {
+    draw_point(X[i], Y[i]);
+    }
 
-
+  });
 
 }
 
@@ -273,7 +263,6 @@ function clr(){
   document.getElementById("results").innerHTML = '';
   ok.addEventListener("click", graduate); 
   canvas.addEventListener("click", plot);
-  document.title = "Fit your curve!";
   done = false;
 }
 
@@ -303,7 +292,7 @@ canvas.removeEventListener("click", plot);
   n = X.length;
 
            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < X.length; i++) {
+        for (i in X) {
         	 draw_point(X[i], Y[i], 3);
         }
 draw_axes();
@@ -407,7 +396,7 @@ let v = delta.toString();
         
         let pred_Y = [];
         
-        			for (let i = 0; i < X.length; i++) {
+        			for (i in X) {
         			 	pred_Y.push(funct(X[i]));
         			}
         			
@@ -446,13 +435,11 @@ let v = delta.toString();
         console.table(transpose_table(all_table));
         
         RSS = []
-        for (x in errors) {
-          RSS.push(errors[x] ** 2)
+        for (x of errors) {
+          RSS.push(x ** 2)
         }
         
-        console.log("RSS : ", sum(RSS));
-
-    document.title = degree + " degree curve fitted!";
+        console.log("RSS : ", sum(RSS))
 
 
 
@@ -474,7 +461,7 @@ ctx.stroke();
 
     else {
            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < X.length; i++) {
+        for (i in X) {
         	 draw_point(X[i], Y[i]);
         }
 draw_axes();
@@ -488,11 +475,12 @@ draw_axes();
 
     }
 
-
-  done = true;
+done = true;
 
 
 }
+
+
 
 
 
@@ -560,7 +548,7 @@ var dragValue, xv_pc, yv_pc;
 
 canvas.onmousedown = function(e) {
   dragValue = ctx;
-
+dragged = false;
 xv_pc = e.clientX-originx;
 yv_pc = e.clientY-originy;
 
@@ -586,7 +574,8 @@ document.onmouseup = function(){
 document.onmousemove = function(ev) {
   if (dragValue == ctx) {
                 dragValue.clearRect(0, 0, canvas.width, canvas.height);
-          
+
+      if((ev.clientX - xv_pc)*(ev.clientY - yv_pc)!=0){dragged=true}
            originx = ev.clientX - xv_pc; 
            originy = ev.clientY - yv_pc;
                       dragValue.putImageData(xax, originx-1, 0);
@@ -600,6 +589,7 @@ document.onmousemove = function(ev) {
 let xv_phn, yv_phn;
 
 canvas.ontouchstart = function(ev) {
+  dragged=false;
            var e = ev.targetTouches[0];
            
 xv_phn = e.clientX - originx;
@@ -647,7 +637,7 @@ function draw_point(x, y, prec=3) {
    ctx.arc(scale*x+originx, originy-scale*y, 2, 0, 2 * Math.PI);
    ctx.stroke();
 
-   ctx.font = "20px Raleway";
+   ctx.font = "20px Arial";
    let j = 10**prec;
    var pt = `(${Math.round(x*j)/j}, ${Math.round(y*j)/j})`;
    ctx.fillText(pt,scale*x+originx+10,originy-scale*y+20);
@@ -697,7 +687,7 @@ function draw(){
 
 // POINTS
 
-for (let i = 0; i < X.length; i++) {
+for (i in X) {
 	 draw_point(X[i], Y[i]);
 }
 
@@ -706,8 +696,6 @@ for (let i = 0; i < X.length; i++) {
 
 
 }
-
-
 
 
 
