@@ -150,6 +150,8 @@ function excel() {
       X.push(Number(s[0]));
       Y.push(Number(s[1]));
     }
+
+    X.pop(); Y.pop();
     
     for (i in X) {
     draw_point(X[i], Y[i]);
