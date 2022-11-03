@@ -11,7 +11,7 @@ var done = false;
 
 let scale = 5;
 let ini_scale, ini_dist;
-let final, degree;
+let final, degree, funct;
 
   let X = [];
   let Y = [];
