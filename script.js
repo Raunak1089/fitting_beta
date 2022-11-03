@@ -693,14 +693,14 @@ for (i in X) {
 	 draw_point(X[i], Y[i]);
 }
 
+
+}
+
 // DEFINE FUNCTION GLOBALLY (TEMPORARILY)
 
         function f(num){
            return eval(final.replace(/t/g, num))
         }
-
-
-}
 
 
 
