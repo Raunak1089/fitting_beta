@@ -144,15 +144,13 @@ function excel() {
 
   navigator.clipboard.readText().then((str)=>{
  	
-    pairs = str.split('\n');
+    pairs = str.split('\r\n');
     for (i of pairs) {
       s = i.split('\t');
       X.push(Number(s[0]));
       Y.push(Number(s[1]));
     }
-
-    X.pop(); Y.pop();
-    
+    X.pop();Y.pop();
     for (i in X) {
     draw_point(X[i], Y[i]);
     }
@@ -160,6 +158,7 @@ function excel() {
   });
 
 }
+
 
 
 function copyElementContents(el) {
