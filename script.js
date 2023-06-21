@@ -1,3 +1,4 @@
+
 let music1 = new Audio('https://raunak1089.github.io/Required-files/dip.wav');
 let music2 = new Audio('https://raunak1089.github.io/Required-files/dido.wav');
 let music3 = new Audio('https://raunak1089.github.io/Required-files/done.mp3');
@@ -42,9 +43,29 @@ degree = Number(document.getElementById('deg').innerHTML);
 // X = [-29, -27, -25, -23, -21, -19, -17, -15, -13, -11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29]
 // Y = [-4, -4, -1, -7, -4, 5, -1, 8, 2, 16, 4, 3, -1, 8, 11, 8, 12, 1, 13, -1, 4, -2, 21, 5, 4, 0, 8, -3, 7, 5];
 
-// X = [1, 9, 22, 28];
-// Y = [6, 11, 13, 23];
+// X = [12, 13, 14.000000000000002, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28.000000000000004, 28.999999999999996, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 68, 69, 70, 71, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+// Y = [553, 672, 913, 995, 1172, 1341, 1453, 1633, 1753, 1933, 2019, 2193, 2369, 2532, 2713, 2832, 3013, 3079, 3251, 3429, 3553, 3733, 3853, 4032, 4213, 4309, 4487, 4632, 4813, 4933, 5113, 5293, 5364, 5535, 5652, 5833, 6012, 6132, 6312, 6425, 6613, 6792, 9287, 9328, 9508, 9748, 10186, 10420, 10588, 10888, 11068, 11308, 11668, 11815, 12113, 12328, 12628, 12868, 13592, 13708, 14062, 14308, 14728, 15088, 15328, 15688, 15924, 16305, 16588, 17068, 17608, 18028, 18487];
 
+
+// X = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+// Y = [73, 39, 1, 87, 59, 51, 60, 10, 54, 24, 13, 49, 81, 35, 19, 100, 40, 49, 35, 84, 82, 5, 89, 99, 89, 33, 12, 48, 71, 5, 53, 34, 48, 49, 17, 6, 51, 61, 9, 49, 94, 91, 43, 93, 59, 3, 63, 11, 98, 79];
+// Y = [17903, 6397, 3285, 3, 4, 14782, 1, 20154, 3, 17, 4595, 101, 3751, 42, 4, 11795, 14, 2, 42, 7203, 258, 1447, 417, 8076, 32, 78, 12165, 21, 6, 253, 61, 103, 20, 601, 123, 11, 16, 11144, 158, 19, 2277, 41, 2677, 595, 60, 220, 684, 371, 726, 25, 105, 2, 3362, 7680, 210, 262, 27, 257, 8, 653, 35, 938, 107, 425, 21184, 71, 6599, 125, 1, 7008, 13, 1, 524, 23, 27, 1, 6, 22, 86, 5002, 5703, 1, 12, 2314, 19015, 9, 1157, 1, 1454, 406, 37, 10479, 28, 1, 4964, 77, 8542, 1789, 11817, 2];
+
+function count(arr, l, u){
+val=0;
+for (x of arr){
+if (x>=l && x<u){
+val++
+}
+}
+return val;
+}
+
+/*
+for (i=0;i<100;i++){
+console.log(`${i*100} - ${i*100+100} : ${count(Y,i*100,i*100+100)}`);
+}
+*/
 
   ok.addEventListener("click", graduate); 
   canvas.addEventListener("click", plot);
@@ -58,7 +79,9 @@ degree = Number(document.getElementById('deg').innerHTML);
 
   draw_point(X[X.length-1], Y[Y.length-1], 3);
 
-  //console.log(X);
+  document.getElementById("inp_point").value = "";
+
+//console.log(X);
   //console.log(Y);
   n = X.length;
   }}
@@ -86,12 +109,12 @@ degree = Number(document.getElementById('deg').innerHTML);
   X.push(new_x);
   Y.push(new_y);
   redo_list_X = []; redo_list_Y = [];
-
-  draw_point(new_x, new_y);
+ draw_point(new_x, new_y);
 
   //console.log(X);
   //console.log(Y);
   n = X.length;
+  document.title=`${n} points plotted!`;
   }
   }
 
@@ -158,7 +181,6 @@ function excel() {
   });
 
 }
-
 
 
 function copyElementContents(el) {
@@ -265,6 +287,7 @@ function clr(){
   ok.addEventListener("click", graduate); 
   canvas.addEventListener("click", plot);
   done = false;
+  document.title="Fit your curve!";
 }
 
 
@@ -298,7 +321,7 @@ canvas.removeEventListener("click", plot);
         }
 draw_axes();
 
-if (done == false) {play_audio('done.mp3');}
+if (done == false) {play_audio('done.mp3'); document.title="Curve fitted!"}
 
 /*
     t = []
@@ -693,13 +716,7 @@ for (i in X) {
 }
 
 
+
+
+
 }
-
-// DEFINE FUNCTION GLOBALLY (TEMPORARILY)
-
-        function f(num){
-           return eval(final.replace(/t/g, num))
-        }
-
-
-
