@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Abril Fatface:400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700&display=swap');
 
-
 *{
  font-family: 'Comic Neue';
 }
@@ -15,11 +14,22 @@ body{
  
 }
 
-#deg{
+#deg_div > span{
   font-size: 1.5em;
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
+}
+
+#deg_div > button{
+  font-family: auto;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  font-size: 1.2em;
+  background: radial-gradient(white,#00ff24);
+  padding: 0; margin: 0;
 }
 
 button{
@@ -88,5 +98,4 @@ animation: anm7 0.5s forwards;
     font-size: 200px;
   }
 }
-
 
