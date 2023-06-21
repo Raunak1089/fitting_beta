@@ -1,7 +1,7 @@
 let music1 = new Audio('https://raunak1089.github.io/Required-files/dip.wav');
 let music2 = new Audio('https://raunak1089.github.io/Required-files/dido.wav');
-let music3 = new Audio('https://raunak1089.github.io/Required-files/done.wav');
-let music4 = new Audio('https://raunak1089.github.io/Required-files/error.wav');
+let music3 = new Audio('https://raunak1089.github.io/Required-files/done.mp3');
+let music4 = new Audio('https://raunak1089.github.io/Required-files/error.mp3');
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
