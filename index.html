@@ -21,10 +21,13 @@
 <br>
 <input id="inp_point" placeholder= "Input a point : eg. 2,5" onkeydown="if (event.keyCode == 13) {go()}"></input>
 
-<div style="font-size: 2em; background: none;">
-<button style="font-size: 1.3em;" onclick= "dec()">-</button>
-<span id="deg">2</span>
-<button style="font-size: 1.3em;" onclick= "inc()">+</button>
+<div id="deg_div" style="font-size: 2em; background: none;">
+<br>
+<span style="font-size: 1em;">Select degree of fitted polynomial:</span>
+<br>
+<button onclick= "dec()">&minus;</button>
+<span id="deg">1</span>
+<button onclick= "inc()">+</button>
 </div>
 
 <canvas id="myCanvas" width="700" height="700"
