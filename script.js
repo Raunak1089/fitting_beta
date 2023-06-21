@@ -114,7 +114,6 @@ console.log(`${i*100} - ${i*100+100} : ${count(Y,i*100,i*100+100)}`);
   //console.log(X);
   //console.log(Y);
   n = X.length;
-  document.title=`${n} points plotted!`;
   }
   }
 
@@ -666,6 +665,8 @@ function draw_point(x, y, prec=3) {
    var pt = `(${Math.round(x*j)/j}, ${Math.round(y*j)/j})`;
    ctx.fillText(pt,scale*x+originx+10,originy-scale*y+20);
 
+   document.title=`${X.length} points plotted!`;
+
 }
 
 /*
@@ -720,3 +721,8 @@ for (i in X) {
 
 
 }
+
+
+
+
+
