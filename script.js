@@ -130,9 +130,8 @@ console.log(`${i*100} - ${i*100+100} : ${count(Y,i*100,i*100+100)}`);
 			for (i in X) {
 			 	draw_point(X[i], Y[i], 3);
 			}
-			
-                      ctx.putImageData(xax, originx-1, 0);
-                      ctx.putImageData(yax, 0, originy-1);
+
+		draw_axes();
 
   //console.log(X);
   //console.log(Y);
@@ -152,9 +151,8 @@ console.log(`${i*100} - ${i*100+100} : ${count(Y,i*100,i*100+100)}`);
 			for (i in X) {
 			 	draw_point(X[i], Y[i], 3);
 			}
-			
-                      ctx.putImageData(xax, originx-1, 0);
-                      ctx.putImageData(yax, 0, originy-1);
+
+		draw_axes();
 
   //console.log(X);
   //console.log(Y);
@@ -555,9 +553,26 @@ function draw_axes() {
     xax.data[i + 3] = 255; //Opacity
   }
 
-  for(let i = Math.ceil(-1*originx/scale); i <= Math.floor((canvas.width-originx)/scale); i++) {
-    ctx.putImageData(x_marks, originx + scale*i, originy-5);
+  function ceil(i,n) {
+    let recess = i-Math.ceil(n)%i;
+    return Math.ceil(n)+recess;
   }
+  function floor(i,n) {
+    let excess = Math.floor(n)%i;
+    return Math.floor(n)-excess;
+  }
+
+  let step = Math.pow(2,Math.floor(50/scale));
+ 
+    for(let i = floor(step,-1*originx/scale); i <= floor(step,(canvas.width-originx)/scale); i+=step) {
+      ctx.putImageData(x_marks, originx + scale*i, originy-5);
+      if(i!=0){
+      ctx.font = "15px Comic Sans";
+      var pt = `${i}`;
+      ctx.fillText(pt, originx + scale*i - 3, originy+17);
+      }
+    }
+
 
   ctx.putImageData(xax, originx - 1, 0);
 
@@ -572,12 +587,21 @@ function draw_axes() {
     yax.data[i + 3] = 255; //Opacity
   }
 
-  for(let i = Math.floor(originy/scale); i >= -1*Math.floor((canvas.height-originy)/scale); i--) {
-    ctx.putImageData(y_marks, originx-5, originy - scale*i);
-  }
+
+    for(let i = floor(step,originy/scale); i >= -1*floor(step,(canvas.height-originy)/scale); i-=step) {
+      ctx.putImageData(y_marks, originx-5, originy - scale*i);
+      if(i!=0){
+      ctx.font = "15px Comic Sans";
+      var pt = `${i}`;
+      ctx.fillText(pt, originx-15, originy - scale*i + 5);
+      }
+    }
+
 
   ctx.putImageData(yax, 0, originy - 1);
 }
+
+
 
 
 
