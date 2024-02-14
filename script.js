@@ -529,41 +529,57 @@ function home(){
 
 draw_axes();
 
-function draw_axes(){
+function draw_axes() {
+  const x_marks = ctx.createImageData(1, 10);
+  const y_marks = ctx.createImageData(10, 1);
+  for (let i = 0; i < x_marks.data.length; i += 4) {
+    x_marks.data[i + 0] = 0; // Red
+    x_marks.data[i + 1] = 0; // Green
+    x_marks.data[i + 2] = 0; // Blue
+    x_marks.data[i + 3] = 255; // Alpha (opacity)
+    y_marks.data[i + 0] = 0; // Red
+    y_marks.data[i + 1] = 0; // Green
+    y_marks.data[i + 2] = 0; // Blue
+    y_marks.data[i + 3] = 255; // Alpha (opacity)
+  }
 
-// X-AXIS
+  // X-AXIS
 
- xax = ctx.createImageData(2, canvas.height);
+  xax = ctx.createImageData(2, canvas.height);
 
-for (let i = 0; i < xax.data.length; i += 4) {
-  xax.data[i+0] = 0; //Red
-  xax.data[i+1] = 0; //Green
-  xax.data[i+2] = 0; //Blue
-  xax.data[i+3] = 255; //Opacity
+
+  for (let i = 0; i < xax.data.length; i += 4) {
+    xax.data[i + 0] = 0; //Red
+    xax.data[i + 1] = 0; //Green
+    xax.data[i + 2] = 0; //Blue
+    xax.data[i + 3] = 255; //Opacity
+  }
+
+  for(let i = Math.ceil(-1*originx/scale); i <= Math.floor((canvas.width-originx)/scale); i++) {
+    ctx.putImageData(x_marks, originx + scale*i, originy-5);
+  }
+
+  ctx.putImageData(xax, originx - 1, 0);
+
+  // Y-AXIS
+
+  yax = ctx.createImageData(canvas.width, 2);
+
+  for (let i = 0; i < yax.data.length; i += 4) {
+    yax.data[i + 0] = 0; //Red
+    yax.data[i + 1] = 0; //Green
+    yax.data[i + 2] = 0; //Blue
+    yax.data[i + 3] = 255; //Opacity
+  }
+
+  for(let i = Math.floor(originy/scale); i >= -1*Math.floor((canvas.height-originy)/scale); i--) {
+    ctx.putImageData(y_marks, originx-5, originy - scale*i);
+  }
+
+  ctx.putImageData(yax, 0, originy - 1);
 }
 
-// Y-AXIS
 
- yax = ctx.createImageData(canvas.width, 2);
-
-for (let i = 0; i < yax.data.length; i += 4) {
-  yax.data[i+0] = 0; //Red
-  yax.data[i+1] = 0; //Green
-  yax.data[i+2] = 0; //Blue
-  yax.data[i+3] = 255; //Opacity
-}
-
-           ctx.putImageData(xax, originx-1, 0);
-           ctx.putImageData(yax, 0, originy-1);
-
-
-/*
-for (let i = -100; i < 100; i+=scale*2) {
-		draw_lines_x(i)
-}
-*/
-
-}
 
 // MAKE DRAGGING FUNCTION FOR PC
 
@@ -601,9 +617,8 @@ document.onmousemove = function(ev) {
       if((ev.clientX - xv_pc)*(ev.clientY - yv_pc)!=0){dragged=true}
            originx = ev.clientX - xv_pc; 
            originy = ev.clientY - yv_pc;
-                      dragValue.putImageData(xax, originx-1, 0);
-                      dragValue.putImageData(yax, 0, originy-1);
                       draw();
+		      draw_axes();
   }
 }
 
@@ -637,9 +652,8 @@ try{
            originx = ev.touches[0].clientX - xv_phn;
            originy = ev.touches[0].clientY - yv_phn;
            
-                      ctx.putImageData(xax, originx-1, 0);
-                      ctx.putImageData(yax, 0, originy-1);
                       draw();
+		      draw_axes();
 
 
 }
@@ -669,20 +683,6 @@ function draw_point(x, y, prec=3) {
 
 }
 
-/*
-function draw_lines_x(x) {
-	 ctx.lineWidth = 2;
-	 ctx.strokeStyle = 'red'; 
-   ctx.beginPath();
-   ctx.arc(scale*x+originx, 0, 1, 0, 2 * Math.PI);
-   ctx.stroke();
-
-   ctx.font = "20px Arial";
-   var pt = x;
-   ctx.fillText(pt,scale*x+originx,30);
-
-}
-*/
 
 function draw(){
 
