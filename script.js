@@ -527,79 +527,92 @@ function home(){
 
 draw_axes();
 
-function draw_axes() {
-  const x_marks = ctx.createImageData(1, 10);
-  const y_marks = ctx.createImageData(10, 1);
-  for (let i = 0; i < x_marks.data.length; i += 4) {
-    x_marks.data[i + 0] = 0; // Red
-    x_marks.data[i + 1] = 0; // Green
-    x_marks.data[i + 2] = 0; // Blue
-    x_marks.data[i + 3] = 255; // Alpha (opacity)
-    y_marks.data[i + 0] = 0; // Red
-    y_marks.data[i + 1] = 0; // Green
-    y_marks.data[i + 2] = 0; // Blue
-    y_marks.data[i + 3] = 255; // Alpha (opacity)
-  }
-
-  // X-AXIS
-
-  xax = ctx.createImageData(2, canvas.height);
-
-
-  for (let i = 0; i < xax.data.length; i += 4) {
-    xax.data[i + 0] = 0; //Red
-    xax.data[i + 1] = 0; //Green
-    xax.data[i + 2] = 0; //Blue
-    xax.data[i + 3] = 255; //Opacity
-  }
-
-  function ceil(i,n) {
-    let recess = i-Math.ceil(n)%i;
-    return Math.ceil(n)+recess;
-  }
-  function floor(i,n) {
-    let excess = Math.floor(n)%i;
-    return Math.floor(n)-excess;
-  }
-
-  let step = Math.pow(2,Math.floor(50/scale));
- 
-    for(let i = floor(step,-1*originx/scale); i <= floor(step,(canvas.width-originx)/scale); i+=step) {
-      ctx.putImageData(x_marks, originx + scale*i, originy-5);
-      if(i!=0){
-      ctx.font = "15px Comic Sans";
-      var pt = `${i}`;
-      ctx.fillText(pt, originx + scale*i - 3, originy+17);
+    function draw_axes() {
+      const x_marks = ctx.createImageData(1, 10);
+      const y_marks = ctx.createImageData(10, 1);
+      for (let i = 0; i < x_marks.data.length; i += 4) {
+        x_marks.data[i + 0] = 0; // Red
+        x_marks.data[i + 1] = 0; // Green
+        x_marks.data[i + 2] = 0; // Blue
+        x_marks.data[i + 3] = 255; // Alpha (opacity)
+        y_marks.data[i + 0] = 0; // Red
+        y_marks.data[i + 1] = 0; // Green
+        y_marks.data[i + 2] = 0; // Blue
+        y_marks.data[i + 3] = 255; // Alpha (opacity)
       }
+
+      // X-AXIS
+
+      xax = ctx.createImageData(2, canvas.height);
+
+      for (let i = 0; i < xax.data.length; i += 4) {
+        xax.data[i + 0] = 0; //Red
+        xax.data[i + 1] = 0; //Green
+        xax.data[i + 2] = 0; //Blue
+        xax.data[i + 3] = 255; //Opacity
+      }
+
+      function ceil(i, n) {
+        let recess = i - (Math.ceil(n) % i);
+        return Math.ceil(n) + recess;
+      }
+      function floor(i, n) {
+        let excess = Math.floor(n) % i;
+        return Math.floor(n) - excess;
+      }
+
+      let step = Math.pow(2, Math.floor(Math.log2(100 / scale)));
+      for (
+        let i = floor(step, (-1 * originx) / scale);
+        i <= floor(step, (canvas.width - originx) / scale);
+        i += step
+      ) {
+        ctx.putImageData(x_marks, originx + scale * i, originy - 5);
+        if (i != 0) {
+          ctx.font = "15px Comic Sans";
+          var pt = `${i}`;
+          ctx.fillText(
+            pt,
+            originx + scale * i - ctx.measureText(i.toString()).width/2,
+            originy + 17
+          );
+        }
+      }
+
+      ctx.putImageData(xax, originx - 1, 0);
+
+      // Y-AXIS
+
+      yax = ctx.createImageData(canvas.width, 2);
+
+      for (let i = 0; i < yax.data.length; i += 4) {
+        yax.data[i + 0] = 0; //Red
+        yax.data[i + 1] = 0; //Green
+        yax.data[i + 2] = 0; //Blue
+        yax.data[i + 3] = 255; //Opacity
+      }
+
+      for (
+        let i = floor(step, originy / scale);
+        i >= -1 * floor(step, (canvas.height - originy) / scale);
+        i -= step
+      ) {
+        ctx.putImageData(y_marks, originx - 5, originy - scale * i);
+        if (i != 0) {
+          ctx.font = "15px Comic Sans";
+          var pt = `${i}`;
+          ctx.fillText(
+            pt,
+            originx - (7 + ctx.measureText(i.toString()).width),
+            originy - scale * i + 5
+          );
+        }
+      }
+
+      ctx.putImageData(yax, 0, originy - 1);
     }
 
 
-  ctx.putImageData(xax, originx - 1, 0);
-
-  // Y-AXIS
-
-  yax = ctx.createImageData(canvas.width, 2);
-
-  for (let i = 0; i < yax.data.length; i += 4) {
-    yax.data[i + 0] = 0; //Red
-    yax.data[i + 1] = 0; //Green
-    yax.data[i + 2] = 0; //Blue
-    yax.data[i + 3] = 255; //Opacity
-  }
-
-
-    for(let i = floor(step,originy/scale); i >= -1*floor(step,(canvas.height-originy)/scale); i-=step) {
-      ctx.putImageData(y_marks, originx-5, originy - scale*i);
-      if(i!=0){
-      ctx.font = "15px Comic Sans";
-      var pt = `${i}`;
-      ctx.fillText(pt, originx-15, originy - scale*i + 5);
-      }
-    }
-
-
-  ctx.putImageData(yax, 0, originy - 1);
-}
 
 
 
