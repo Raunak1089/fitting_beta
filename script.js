@@ -704,21 +704,21 @@ enableScroll();
 
 draw();
 
-function draw_point(x, y, prec=3) {
-	 ctx.lineWidth = 5;
-	 ctx.strokeStyle = 'blue'; 
-   ctx.beginPath();
-   ctx.arc(scale*x+originx, originy-scale*y, 2, 0, 2 * Math.PI);
-   ctx.stroke();
+function draw_point(x, y, color = "blue", label = true, prec = 3) {
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = color;
+      ctx.beginPath();
+      ctx.arc(scale * x + originx, originy - scale * y, 2, 0, 2 * Math.PI);
+      ctx.stroke();
 
-   ctx.font = "20px Arial";
-   let j = 10**prec;
-   var pt = `(${Math.round(x*j)/j}, ${Math.round(y*j)/j})`;
-   ctx.fillText(pt,scale*x+originx+10,originy-scale*y+20);
+      if(label) {
+        ctx.font = "20px Arial";
+        let j = 10 ** prec;
+        var pt = `(${Math.round(x * j) / j}, ${Math.round(y * j) / j})`;
+        ctx.fillText(pt, scale * x + originx + 10, originy - scale * y + 20);
+      }
+    }
 
-   document.title=`${X.length} points plotted!`;
-
-}
 
 
 function draw(){
