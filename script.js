@@ -376,6 +376,18 @@ t = X;
 
 //console.log(eq);
 
+function det(mat) {
+    let matrix = []
+    let n = mat.length ** 0.5;
+    for (let z = 0; z < n; z++) {
+        matrix.push([])
+        for (let zz = 0; zz < n; zz++) {
+            matrix[matrix.length - 1].push(mat[n * z + zz])
+        }
+    }
+    return Matrix.det(matrix)
+}
+
 
 let delta, delta_c;
 
