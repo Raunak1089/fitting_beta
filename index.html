@@ -488,17 +488,9 @@ function graduate() {
 //ok.removeEventListener("click", graduate);
 canvas.removeEventListener("click", plot);
 
-n = X.length;
-let effective_X = [];
-for (x in X){
-    if (effective_X.includes(X[x]) == false) {
-        effective_X.push(X[x])
-    }
-}
+let n = X.length;
 
-let effective_n = effective_X.length;
-
-if (0 <= degree & degree < effective_n) {
+if (0 <= degree & degree < n) {
     n = X.length;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (i in X) {
@@ -508,103 +500,39 @@ if (0 <= degree & degree < effective_n) {
 
 if (done == false) {play_audio('done.mp3'); document.title="Curve fitted!"}
 
-t = X;
+let X_matrix = [];
 
-    t_powers = []
-    for  (let i=0; i<=2*degree; i++){
-        t_powers.push([])
-        for (let j=0; j<n; j++){
-            t_powers[t_powers.length-1].push(t[j]**(i))
-        }
+for (let i = 0; i < n; i++){
+    X_matrix.push([]);
+    for (let j = 0; j <= degree; j++) {
+        X_matrix[i].push(X[i] ** j);
     }
-
-
-    yt_prod = []
-    for (let i=0; i<=degree; i++){
-        yt_prod.push([])
-        for (let j=0; j<n; j++){
-            yt_prod[yt_prod.length-1].push(Y[j]*(t[j]**i))
-        }
-    }
-
-
-    let eq = '';
-    all = [];
-    for (let i=0; i<=degree; i++){
-        eq += `\n\n${sum(yt_prod[i])} = 0 `
-        all.push([])
-        for (let j=0; j<=degree; j++){
-//            if ((i+j) % 2 == 0){
-                eq += `+ a${j}*${sum(t_powers[i+j])} `;
-                all[all.length-1].push(sum(t_powers[i+j]));
-/*            }
-            else{
-                eq += '+ 0 '
-                all[all.length-1].push(0)
-            }
-*/
-        }
-
-        all[all.length-1].push(sum(yt_prod[i]))
-    }
-
-//console.log(eq);
-
-function det(mat) {
-    let matrix = []
-    let n = mat.length ** 0.5;
-    for (let z = 0; z < n; z++) {
-        matrix.push([])
-        for (let zz = 0; zz < n; zz++) {
-            matrix[matrix.length - 1].push(mat[n * z + zz])
-        }
-    }
-    return Matrix.det(matrix)
 }
 
-
-let delta, delta_c;
-
-    a = [];
-    delta = [];
-    for (let i=0; i<=degree; i++){
-        for (let j=0; j<=degree; j++){
-            delta.push(all[i][j]);
-        }
-    }
-
-let v = delta.toString();
-    
-    for (let i=0; i<=degree; i++){
-        delta_c = eval(`[${v}]`);
-        for (let j=0; j<=degree; j++){
-            delta_c[i+(degree+1)*j] = all[j][all[j].length-1]
-        }
-        a.push(det(delta_c)/det(delta));
-        //console.log(`a${i} = ${det(delta_c)/det(delta)}`)
-    }
-    
-    
-        final = `${a[0]}`
-        for (let i=1; i<=degree; i++){
-            final += ` + (${a[i]})*((t)**${i})`
-        }
-    
-     
-        //console.log('\n\nGraduated function:\n')
-        //console.log(final)
+let XtX = Matrix.multiply_matrices(Matrix.transpose(X_matrix), X_matrix);
+let XtY = Matrix.multiply_matrices(Matrix.transpose(X_matrix), Matrix.transpose([Y]));
+let augmented = Matrix.augment(XtX, XtY);
+let row_reduced_form = Matrix.rref(augmented);
+let co_effs = [];
+for(let x of row_reduced_form) co_effs.push(x[degree+1]);
 
 
-        funct = (num)=>{
-           return eval(final.replace(/t/g, num))
-        }
+
+// MAKE SOLVING FUNCTION ____________________
+
+funct = function (x){
+    let ans = co_effs[0];
+    for(let i=1;i<=degree;i++) ans = ans + co_effs[i] * (x**i);
+    return ans;
+}
+
         
         
         let pred_Y = [];
         
-        			for (i in X) {
-        			 	pred_Y.push(funct(X[i]));
-        			}
+        for (let i in X) {
+            pred_Y.push(funct(X[i]));
+        }
         			
         let r2 = Var(pred_Y)/Var(Y);
         
@@ -613,21 +541,21 @@ let v = delta.toString();
         
         // POLYNOMIAL TO SHOW ____________
         
-            show = `y = ${a[0]}`;
-            if (degree > 0) { show += ` + (${a[1]} . x)`};
+            let show = `y = ${co_effs[0]}`;
+            if (degree > 0) { show += ` + (${co_effs[1]} . x)`};
             for (let i=2; i<=degree; i++){
-                show += ` + (${a[i]} . x<sup>${i}</sup>)`
+                show += ` + (${co_effs[i]} . x<sup>${i}</sup>)`
             }
         
         document.getElementById("results").innerHTML = 
         "Curve : "+show+"<br><br>r<sub>"+degree+"</sub><sup>2</sup> = "+ (Math.round(r2*(10**8)))/(10**8);
         
         
-        errors = [];
+        let errors = [];
         
-        			for (let i = 0; i < n; i++) {
-        			 	errors.push(Y[i]-pred_Y[i]);
-        			}
+        for (let i = 0; i < n; i++) {
+            errors.push(Y[i]-pred_Y[i]);
+        }
         
 
         all_table = [];
@@ -641,7 +569,7 @@ let v = delta.toString();
         console.table(transpose_table(all_table));
         
         RSS = []
-        for (x of errors) {
+        for (let x of errors) {
           RSS.push(x ** 2)
         }
         
@@ -649,12 +577,12 @@ let v = delta.toString();
 
 
 
-// CURVE
+    // CURVE
 
-ctx.lineWidth= 1;
-ctx.strokeStyle='red';
+    ctx.lineWidth= 1;
+    ctx.strokeStyle='red';
 
-ctx.beginPath();
+    ctx.beginPath();
 
     ctx.moveTo(0,originy-scale*funct(-originx));
 
@@ -662,22 +590,21 @@ ctx.beginPath();
       ctx.lineTo(scale*x+originx,originy-scale*funct(x));
     }
 
-ctx.stroke();
-    }
+    ctx.stroke();
 
-    else {
+    }   else {
            ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (i in X) {
         	 draw_point(X[i], Y[i]);
         }
-draw_axes();
+    draw_axes();
 
-        play_audio('error.mp3');
-        document.getElementById("results").innerHTML = 
-        "Curve doesn't exist";
-        
-        done = false;
-        canvas.addEventListener("click", plot);
+    play_audio('error.mp3');
+    document.getElementById("results").innerHTML = 
+    "Curve doesn't exist";
+    
+    done = false;
+    canvas.addEventListener("click", plot);
 
     }
 
@@ -903,10 +830,6 @@ function draw(){
 
   if (done == true){
 
-    function funct(num){
-      return eval(final.replace(/t/g, num))
-    }
-
       // CURVE
 
     ctx.lineWidth= 1;
@@ -943,13 +866,5 @@ for (i in X) {
 
 </script>
 
-<script>
-  javascript:(function(){var script=document.createElement('script');script.src="https://cdn.jsdelivr.net/npm/eruda"; document.body.appendChild(script);script.onload = function () {eruda.init()} })();
-
-var frac = new Fraction( 0.3435);
-
-console.log(frac.toString());
-
-</script>
 </body>
 </html>
