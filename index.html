@@ -447,7 +447,7 @@ function find() {
   previousHtml = span.innerHTML;
   span.innerHTML = `
   <span>f(</span>
-  <input style="font-size: 1em; width: 1em;"
+  <input type='number' style="font-size: 1em; width: 1em;"
     oninput="document.querySelector('span#ans').innerText = funct(this.value);"
     onfocusout="showSearchIconAgain()">
   <span>) = </span>
