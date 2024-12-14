@@ -334,16 +334,16 @@ console.log(`${i*100} - ${i*100+100} : ${count(Y,i*100,i*100+100)}`);
 function excel() {	
 
   navigator.clipboard.readText().then((str)=>{
- 	
-    pairs = str.split('\r\n');
-    for (i of pairs) {
-      s = i.split('\t');
+  
+    let pairs = str.split('\r\n');
+    for (let i of pairs) {
+      let s = i.split('\t');
       X.push(Number(s[0]));
       Y.push(Number(s[1]));
     }
     X.pop();Y.pop();
-    for (i in X) {
-    draw_point(X[i], Y[i]);
+    for (let i in X) {
+      draw_point(X[i], Y[i]);
     }
 
   });
